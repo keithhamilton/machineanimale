@@ -16,6 +16,7 @@ class Game(object):
 
     def __init__(self, data_types, animal_count, turn_count):
         self.animals_count = animal_count
+        self.game_orientation = random.choice(['horizontal', 'vertical'])
         self.pairing_types = ['adjective', 'noun']
         self.player_turns = turn_count
         self._players = []
@@ -38,11 +39,12 @@ class Game(object):
         """
 
         turns = self.player_turns[datetime.datetime.today().weekday()]
+        orientation = ['Game orientation: {}'.format(self.game_orientation)]
         for player in self.players:
             for turn in range(turns):
                 animals = [player.animal(random.choice(self.pairing_types))
                            for i in range(self.animals_count)]
-                player.send(animals)
+                player.send(orientation + animals)
 
 
 class Player(object):
